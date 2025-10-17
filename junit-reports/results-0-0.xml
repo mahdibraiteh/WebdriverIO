@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="1" failures="0" errors="0" skipped="0">
+  <testsuite name="Demo test 2" timestamp="2025-10-16T20:22:18" time="2.993" tests="1" failures="0" errors="0" skipped="0">
+    <properties>
+      <property name="specId" value="0"/>
+      <property name="suiteName" value="Demo test 2"/>
+      <property name="capabilities" value="chrome.141_0_7390_66.windows"/>
+      <property name="file" value="file:///C:/Users/mahdi/OneDrive/Desktop/wdioprjct/test/specs/login.spec.js"/>
+    </properties>
+    <testcase classname="chrome.141_0_7390_66.windows.Demo_test_2" name="login test" time="2.989">
+      <system-out><![CDATA[
+COMMAND: POST /session/9a4f881aa862bc7b632648e3212d3d87/element - {"using":"css selector","value":"#username"}
+RESULT: {"using":"css selector","value":"#username"}
+COMMAND: POST /session/9a4f881aa862bc7b632648e3212d3d87/element/f.52198980E12D349DEA6BB5DA048BEB97.d.51CF27FD1A7B458CE42F8206A1ACF289.e.3/clear - {}
+RESULT: {}
+COMMAND: POST /session/9a4f881aa862bc7b632648e3212d3d87/element/f.52198980E12D349DEA6BB5DA048BEB97.d.51CF27FD1A7B458CE42F8206A1ACF289.e.3/value - {"text":"tomsmith"}
+RESULT: {"text":"tomsmith"}
+COMMAND: POST /session/9a4f881aa862bc7b632648e3212d3d87/element/f.52198980E12D349DEA6BB5DA048BEB97.d.51CF27FD1A7B458CE42F8206A1ACF289.e.4/clear - {}
+RESULT: {}
+COMMAND: POST /session/9a4f881aa862bc7b632648e3212d3d87/element/f.52198980E12D349DEA6BB5DA048BEB97.d.51CF27FD1A7B458CE42F8206A1ACF289.e.4/value - {"text":"SuperSecretPassword!"}
+RESULT: {"text":"SuperSecretPassword!"}
+COMMAND: POST /session/9a4f881aa862bc7b632648e3212d3d87/element/f.52198980E12D349DEA6BB5DA048BEB97.d.51CF27FD1A7B458CE42F8206A1ACF289.e.5/click - {}
+RESULT: {}
+COMMAND: GET /session/9a4f881aa862bc7b632648e3212d3d87/element/f.52198980E12D349DEA6BB5DA048BEB97.d.7EF341853DC484698624772BE86B1B1C.e.12/text - {}
+RESULT: {}
+COMMAND: DELETE /session/9a4f881aa862bc7b632648e3212d3d87 - {}
+RESULT: {}
+]]></system-out>
+    </testcase>
+  </testsuite>
+</testsuites>
