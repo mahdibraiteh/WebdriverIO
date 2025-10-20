@@ -1,112 +1,44 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_VERSION = '20'                       // Node version configured in Jenkins
-        REPORT_DIR = 'junit-reports'                    // JUnit output folder
-        ALLURE_RESULTS_DIR = 'allure-results'     // Allure results folder
-        ALLURE_REPORT_DIR = 'allure-report'       // Allure report folder
-        // SLACK_CHANNEL = '#qa-notifications'       // Optional Slack channel
-    }
-
     tools {
-        nodejs "NodeJS_${env.NODE_VERSION}"
+        nodejs 'NodeJS_20'   // matches the name from Jenkins → Tools
     }
 
     options {
         timestamps()
-        ansiColor('xterm')
         buildDiscarder(logRotator(numToKeepStr: '10'))
-        timeout(time: 60, unit: 'MINUTES')
-    }
-
-    triggers {
-        // Trigger build on every push (GitHub webhook)
-        githubPush()
     }
 
     stages {
         stage('Checkout') {
             steps {
-                echo "🔄 Checking out branch: ${env.BRANCH_NAME}"
-                checkout scm
+                // Pull latest code from GitHub
+                git branch: 'main', url: 'https://github.com/mahdibraiteh/WebdriverIO.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                echo "📦 Installing NPM dependencies..."
+                echo 'Installing dependencies...'
                 sh 'npm ci'
             }
         }
 
-        stage('Lint') {
+        stage('Run WebdriverIO Tests') {
             steps {
-                echo "🧹 Linting test files..."
-                sh 'npx eslint ./test || true'
-            }
-        }
-
-        stage('Run Tests in Parallel') {
-            matrix {
-                axes {
-                    axis {
-                        name 'BROWSER'
-                        values 'chrome', 'firefox'
-                    }
-                }
-                stages {
-                    stage("Run test") {
-                        steps {
-                            sh """
-                            export BROWSER=${BROWSER}
-                            npx wdio run wdio.conf.js --suite smoke
-                            """
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Publish Test Reports') {
-            steps {
-                echo "📊 Publishing test results..."
-                junit allowEmptyResults: true, testResults: "${REPORT_DIR}/junit/**/*.xml"
-                allure includeProperties: false, results: [[path: "${ALLURE_RESULTS_DIR}"]]
-            }
-        }
-
-        stage('Generate Allure Report') {
-            steps {
-                echo "🧾 Generating Allure report..."
-                sh """
-                npx allure generate ${ALLURE_RESULTS_DIR} --clean -o ${ALLURE_REPORT_DIR} || true
-                """
-                archiveArtifacts artifacts: "${ALLURE_REPORT_DIR}/**", allowEmptyArchive: true
+                echo 'Running WebdriverIO tests...'
+                sh 'npx wdio run ./wdio.conf.js'
             }
         }
     }
 
     post {
-        always {
-            echo "🧹 Cleaning workspace..."
-            cleanWs()
-        }
-
-        failure {
-            echo "❌ Tests failed on build #${env.BUILD_NUMBER}"
-            // Uncomment this block if Slack plugin is configured
-            /*
-            slackSend(
-                channel: "${SLACK_CHANNEL}",
-                color: '#ff0000',
-                message: "❌ WebdriverIO tests failed for *${env.JOB_NAME}* (build #${env.BUILD_NUMBER}). Check Jenkins for details."
-            )
-            */
-        }
-
         success {
-            echo "✅ Tests completed successfully!"
+            echo '✅ All tests passed successfully!'
+        }
+        failure {
+            echo '❌ Some tests failed. Check reports in Jenkins.'
         }
     }
 }
