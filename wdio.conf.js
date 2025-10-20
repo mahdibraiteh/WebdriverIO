@@ -135,6 +135,9 @@ exports.config = {
                 outputDir: 'junit-reports',
                 outputFileFormat: function(opts) {
                 //  options.specs[0].split(/[\\/]/).pop().split('.').shift() + '.xml'
+                // const path = require('path');
+                // const specName = path.basename(opts.specs[0]).replace('.js', '');
+                //     console.log(specName)
                     return `results-${opts.cid}.xml`
                 }
             }
