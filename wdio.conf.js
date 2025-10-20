@@ -133,9 +133,9 @@ exports.config = {
         [
             'junit', {
                 outputDir: 'junit-reports',
-                outputFileFormat: function(options) {
-                  //  options.specs[0].split(/[\\/]/).pop().split('.').shift() + '.xml'
-                    return `results-${options.cid}.xml`
+                outputFileFormat: function(opts) {
+                //  options.specs[0].split(/[\\/]/).pop().split('.').shift() + '.xml'
+                    return `results-${opts.cid}.xml`
                 }
             }
         ],
