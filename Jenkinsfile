@@ -31,7 +31,7 @@ pipeline {
                 echo '🚀 Running WebdriverIO tests...'
                 // bat 'npx wdio run ./wdio.conf.js'
 
-                bat 'npx wdio run ./wdio.conf.js --spec .\test\specs\test1.spec.js '
+                bat 'npx wdio run ./wdio.conf.js --spec ./test/specs/test1.spec.js '
             }
         }
 
