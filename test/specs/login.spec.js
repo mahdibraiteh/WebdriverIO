@@ -7,6 +7,7 @@ describe('Demo test 2', function(){
         browser.url('https://the-internet.herokuapp.com/login')
 
         await LoginPage.login('tomsmith', 'SuperSecretPassword!')
+        
         await LoginPage.checkMessage('You logged into a secure area!')
 
         // await $('#username').setValue('tomsmith')    
