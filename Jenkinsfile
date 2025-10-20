@@ -39,7 +39,7 @@ pipeline {
             steps {
                 echo '🧾 Publishing test reports...'
                 
-                // JUnit test reports (works if WDIO reporter is set to output ./junit-reports/*.xml)
+                // test JUnit test reports (works if WDIO reporter is set to output ./junit-reports/*.xml)
                 junit allowEmptyResults: true, testResults: 'junit-reports/*.xml'
             }
         }
