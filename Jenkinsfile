@@ -68,6 +68,10 @@ pipeline {
         }
         always {
             echo '📊 Build completed. Check reports under Jenkins > Build Details.'
+
+            // Archive WebdriverIO artifacts
+            archiveArtifacts artifacts: 'errorShots/**/*.png', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'logs/**/*.log', allowEmptyArchive: true
         }
     }
 }
