@@ -56,13 +56,11 @@ pipeline {
                     }
                 }
                 stages {
-                    stage("Run on ${BROWSER}") {
+                    stage("Run test") {
                         steps {
-                            echo "🚀 Running tests on ${BROWSER}"
                             sh """
                             export BROWSER=${BROWSER}
-                            mkdir -p ${REPORT_DIR}/junit
-                            npx wdio run wdio.conf.js --suite smoke || true
+                            npx wdio run wdio.conf.js --suite smoke
                             """
                         }
                     }
