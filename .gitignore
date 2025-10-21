@@ -2,3 +2,5 @@ node_modules/
 allure-report/
 allure-results/
 junit-reports/
+logs/
+errorShots/

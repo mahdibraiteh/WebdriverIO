@@ -23,7 +23,6 @@ exports.config = {
     specs: [
         './test/specs/**/*.js'
     ],
-    screenshotPath: './errorShots/',
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -62,6 +61,7 @@ exports.config = {
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'info',
+    outputDir: './logs',
     //
     // Set specific log levels per logger
     // loggers:
@@ -110,8 +110,6 @@ exports.config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'mocha',
-    outputDir: './logs',
-    
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -249,12 +247,26 @@ exports.config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        if (!passed) {
-            await browser.takeScreenshot();
+    // afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    //     if (!passed) {
+    //         await browser.takeScreenshot();
+    //     }
+    // },
+
+    //After errr save Screenshot
+    afterTest: async function (test, context, { error, result, duration, passed, retries }) {
+    if (!passed) {
+        const screenshotPath = './errorShots';
+
+        // Create folder if it doesn’t exist
+        const fs = require('fs');
+        if (!fs.existsSync(screenshotPath)) {
+            fs.mkdirSync(screenshotPath, { recursive: true });
+        }
+        
+        await browser.saveScreenshot(`${screenshotPath}/${test.title}.png`);
         }
     },
-
 
     /**
      * Hook that gets executed after the suite has ended
