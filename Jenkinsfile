@@ -35,14 +35,14 @@ pipeline {
             }
         }
 
-        // stage('Publish Test Reports') {
-        //     steps {
-        //         echo '🧾 Publishing test reports...'
+        stage('Publish Test Reports') {
+            steps {
+                echo '🧾 Publishing test reports...'
                 
-        //         // test JUnit test reports (works if WDIO reporter is set to output ./junit-reports/*.xml)
-        //         junit allowEmptyResults: true, testResults: 'junit-reports/**/*.xml'
-        //     }
-        // }
+                // JUnit test reports (works if WDIO reporter is set to output ./junit-reports/*.xml)
+                junit allowEmptyResults: true, testResults: 'junit-reports/**/*.xml'
+            }
+        }
 
         stage('Allure Report') {
             when {
